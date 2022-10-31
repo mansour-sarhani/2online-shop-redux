@@ -1,0 +1,43 @@
+.admin-page-container {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.admin-page-sidebar {
+    width: 20%;
+    min-width: 20%;
+    margin-left: 3%;
+    background: #fff;
+    box-shadow: 1px 1px 5px 2px rgb(0 0 0 / 8%);
+}
+
+.admin-page-sidebar ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.admin-page-sidebar ul li {
+    padding: 10px 20px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+.admin-page-content {
+    width: 77%;
+    min-width: 77%;
+}
+
+.product-image-preview {
+    width: 200px;
+    height: auto;
+    margin: 20px 0;
+}
+
+.replace-org-img {
+    margin: 0;
+    font-size: 13px;
+    color: red;
+    text-decoration: underline;
+    cursor: pointer;
+}

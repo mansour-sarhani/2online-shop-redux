@@ -1,10 +1,9 @@
-import {useCartState} from "../../Context/Cart/cartContext";
-import {useAuthState} from "../../Context/Auth/authContext";
 import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 function CartSummary() {
-    const {user, isLoggedIn} = useAuthState()
-    const {total, orgTotal} = useCartState()
+    const {user, isLoggedIn} = useSelector(state => state.auth)
+    const {total, orgTotal} = useSelector(state => state.cart)
 
     return (
         <div className="cart-summary">

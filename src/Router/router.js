@@ -8,8 +8,6 @@ import AddProductForm from "../Components/Admin/AddProduct/AddProductForm";
 import EditProductForm from "../Components/Admin/AddProduct/EditProductForm";
 import ProductPage from "../Pages/ProductPage";
 import CartPage from "../Pages/CartPage";
-import RegisterPage from "../Pages/RegisterPage";
-import LoginPage from "../Pages/LoginPage";
 import ProfilePage from "../Pages/ProfilePage";
 import AuthPage from "../Pages/AuthPage";
 import CheckOutPage from "../Pages/CheckOutPage";

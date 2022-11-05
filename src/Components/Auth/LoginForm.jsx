@@ -3,9 +3,9 @@ import {useFormik} from "formik";
 import http from "../../Services/httpService";
 import {toast} from "react-toastify";
 import * as Yup from "yup";
-import {useAuthDispatch, useAuthState} from "../../Context/Auth/authContext";
 import {useQuery} from "../../hooks/useQuery";
-import {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {USER_LOG_IN} from "../../Redux/authSlice";
 
 const initialValues = {
     email: '',
@@ -20,23 +20,11 @@ const validationSchema = Yup.object({
 })
 
 function LoginForm() {
-    const dispatch = useAuthDispatch()
+    const dispatch = useDispatch()
+    const {user} = useSelector(state => state.auth)
 
     const loginRedirect = useNavigate();
     const query = useQuery().get('redirect')
-    
-    const savedUser = useAuthState().user
-
-    const [regUser, setRegUser] = useState(null);
-
-    useEffect(() => {
-        if (savedUser) {
-            setRegUser({
-                email: savedUser.email,
-                password: savedUser.password
-            })
-        }
-    }, [savedUser]);
 
     const isUser = async (serverUsers, formValue) => {
         const user = serverUsers.find(user => user.email === formValue.email && user.password === formValue.password)
@@ -48,10 +36,7 @@ function LoginForm() {
             res => isUser(res.data, values)
         )
         if (user) {
-            dispatch({
-                type: 'USER_LOGIN',
-                payload: user
-            })
+            dispatch(USER_LOG_IN(user))
             toast.success(`${user.name} عزیز خوش آمدید `)
             loginRedirect( query === 'checkout' ? '/checkout' : '/profile')
         }
@@ -61,7 +46,7 @@ function LoginForm() {
     }
 
     const formik = useFormik({
-        initialValues : regUser || initialValues,
+        initialValues : user || initialValues,
         validationSchema,
         onSubmit,
         validateOnChange: false,

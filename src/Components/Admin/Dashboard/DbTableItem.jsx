@@ -1,15 +1,13 @@
-import {useProductsDispatch} from "../../../Context/Product/productsContext";
 import {BsPencilSquare, BsTrash} from "react-icons/bs";
 import {Link} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {DELETE_PRODUCT} from "../../../Redux/productsSlice";
 
 function DbTableItem({product}) {
-    const dispatch = useProductsDispatch()
+    const dispatch = useDispatch()
 
     const deleteProduct = (productId) => {
-        dispatch({
-            type: 'DELETE_PRODUCT',
-            payload: productId
-        })
+        dispatch(DELETE_PRODUCT(productId))
     }
 
     return (

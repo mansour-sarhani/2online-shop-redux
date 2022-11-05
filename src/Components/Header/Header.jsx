@@ -1,27 +1,18 @@
 import "./header.css";
 import {Link, NavLink} from "react-router-dom";
-import {useEffect, useState} from "react";
-import {useCartState} from "../../Context/Cart/cartContext";
-import {useAuthDispatch, useAuthState} from "../../Context/Auth/authContext";
+import {useDispatch, useSelector} from "react-redux";
+import {USER_LOG_OUT} from "../../Redux/authSlice";
 
 export default function Header() {
-    let activeClassName = "active-link";
-
-    const savedUser = useAuthState()
-    const dispatch = useAuthDispatch()
-    const {cart} = useCartState()
-
-    const [savedCart, setSavedCart] = useState(cart);
-
-    useEffect(() => {
-        setSavedCart(cart)
-    }, [cart]);
+    const dispatch = useDispatch()
+    const {cart} = useSelector(state => state.cart)
+    const {user} = useSelector(state => state.auth)
 
     const onSignOut = () => {
-        dispatch({
-            type: 'USER_SIGN_OUT'
-        })
+        dispatch(USER_LOG_OUT())
     }
+
+    let activeClassName = "active-link";
 
     return (
         <header className="header-wrapper">
@@ -57,7 +48,7 @@ export default function Header() {
                                             فروشگاه
                                         </NavLink>
                                     </li>
-                                    {savedUser && savedUser.user && savedUser.user.email === 'mansour.sarhani@gmail.com' &&
+                                    {user && user.email === 'mansour.sarhani@gmail.com' &&
                                         <li className="nav-item">
                                             <NavLink
                                                 to="/admin"
@@ -76,12 +67,12 @@ export default function Header() {
                     <div className="alt-menu-container">
                         <nav className="navbar navbar-expand-lg">
                             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                                {savedUser.user ?
+                                {user ?
                                     <>
                                         <li className="nav-item">
-                                            <a href="/" onClick={onSignOut}>
+                                            <Link to={"/"} onClick={onSignOut}>
                                                 خروج
-                                            </a>
+                                            </Link>
                                         </li>
                                         <li className="nav-item">
                                             <NavLink
@@ -117,7 +108,7 @@ export default function Header() {
                                     >
                                         سبد خرید
                                     </NavLink>
-                                    {savedCart && <span className="nav-cart-qty">{savedCart.length}</span>}
+                                    {cart && <span className="nav-cart-qty">{cart.length}</span>}
                                 </li>
                             </ul>
                         </nav>

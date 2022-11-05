@@ -1,10 +1,10 @@
-import {useProductsState} from "../../../Context/Product/productsContext";
 import Loader from "../../../Common/Loader";
 import './dashboard.css'
 import DashboardTable from "./DashboardTable";
+import {useSelector} from "react-redux";
 
 function Dashboard() {
-    const {products, initialized} = useProductsState()
+    const {products, initialized} = useSelector(state => state.products)
 
     if (!initialized) {
         return <Loader/>

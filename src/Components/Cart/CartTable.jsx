@@ -1,16 +1,10 @@
-import {useEffect, useState} from "react";
 import CartTableItem from "./CartTableItem";
-import {useCartState} from "../../Context/Cart/cartContext";
+import {useSelector} from "react-redux";
 
 function CartTable() {
-    const {cart} = useCartState()
-    const [cartItems, setCartItems] = useState(cart);
+    const {cart} = useSelector(state => state.cart)
 
-    useEffect(() => {
-        setCartItems(cart)
-    }, [cart]);
-
-    const renderedCartItems = cartItems && cartItems.map(product => <CartTableItem product={product} key={product.id} />)
+    const renderedCartItems = cart && cart.map(product => <CartTableItem product={product} key={product.id} />)
 
     return (
         <div className="cart-table">

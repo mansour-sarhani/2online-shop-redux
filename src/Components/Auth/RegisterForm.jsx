@@ -1,8 +1,9 @@
 import {useFormik} from "formik";
 import * as Yup from 'yup';
-import {useAuthDispatch} from "../../Context/Auth/authContext";
 import http from "../../Services/httpService";
 import {toast} from "react-toastify";
+import {useDispatch} from "react-redux";
+import {USER_REGISTER} from "../../Redux/authSlice";
 
 const initialValues = {
     name: '',
@@ -33,7 +34,7 @@ const validationSchema = Yup.object({
 })
 
 function RegisterForm() {
-    const dispatch = useAuthDispatch()
+    const dispatch = useDispatch()
 
     const checkEmail = (serverUsers,values) => {
         const user = serverUsers.find(user => user.email === values.email);
@@ -45,17 +46,14 @@ function RegisterForm() {
         if (user) {
             toast.error("ایمیل شما قبلا ثبت شده است!")
         } else {
-            const userData = {
+            const user = {
                 name: values.name,
                 userName: values.userName,
                 email: values.email,
                 telNo: values.telNo,
                 password: values.password
             }
-            dispatch({
-                type: 'USER_REGISTER',
-                payload: userData
-            })
+            dispatch(USER_REGISTER(user))
         }
     }
 

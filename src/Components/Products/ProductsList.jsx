@@ -1,10 +1,10 @@
 import ArchiveProduct from "./ArchiveProduct";
 import './products.css'
 import Loader from "../../Common/Loader";
-import {useProductsState} from "../../Context/Product/productsContext";
+import {useSelector} from "react-redux";
 
 function ProductsList() {
-    const {products, initialized} = useProductsState()
+    const {products, initialized} = useSelector(state => state.products)
 
     const renderedProducts = products.map(product => <ArchiveProduct key={product.uid} product={product}/>)
 

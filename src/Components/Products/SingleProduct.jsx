@@ -1,10 +1,16 @@
 import {Link, useParams} from "react-router-dom";
-import {useCartDispatch} from "../../Context/Cart/cartContext";
 import {useEffect, useState} from "react";
 import getOneProduct from "../../Services/getOneProduct";
+import {useDispatch, useSelector} from "react-redux";
+import {ADD_TO_CART} from "../../Redux/cartSlice";
 
 function SingleProduct() {
-    const dispatch = useCartDispatch()
+    const dispatch = useDispatch()
+    const {cart} = useSelector(state => state.cart)
+    function checkInCart(product, cart){
+        if (cart) return cart.find(c => c.id === product.id)
+    }
+
     const [product, setProduct] = useState({
         name: '',
         desc: '',
@@ -31,12 +37,7 @@ function SingleProduct() {
     }, [productId]);
 
     const addToCart = () => {
-        dispatch({
-            type: 'ADD_TO_CART',
-            payload: {
-                product
-            }
-        })
+        dispatch(ADD_TO_CART(product))
     }
 
     return (
@@ -69,9 +70,14 @@ function SingleProduct() {
                     }
                 </div>
                 <div className="single-product-cta">
-                    <Link>
-                        <button onClick={addToCart}>افزودن به سبد خرید</button>
-                    </Link>
+                    {checkInCart(product, cart)
+                        ?
+                        <Link to={"/cart"}>
+                            <button>ادامه خرید</button>
+                        </Link>
+                        :
+                        <button onClick={() => addToCart(product)}>افزودن به سبد خرید</button>
+                    }
                 </div>
             </div>
         </div>

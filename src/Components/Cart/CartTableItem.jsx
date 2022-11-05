@@ -1,35 +1,21 @@
 import {Link} from "react-router-dom";
-import {useCartDispatch} from "../../Context/Cart/cartContext";
 import {BsDash, BsPlus, BsTrash} from "react-icons/bs";
+import {useDispatch} from "react-redux";
+import {ADD_TO_CART, MINUS_FROM_CART, REMOVE_CART_ITEM} from "../../Redux/cartSlice";
 
 function CartTableItem({product}) {
-    const dispatch = useCartDispatch()
+    const dispatch = useDispatch()
 
     const addToCart = (product) => {
-        dispatch({
-            type: 'ADD_TO_CART',
-            payload: {
-                product
-            }
-        })
+        dispatch(ADD_TO_CART(product))
     }
 
     const minusFromCart = (product) => {
-        dispatch({
-            type: 'MINUS_FROM_CART',
-            payload: {
-                product
-            }
-        })
+        dispatch(MINUS_FROM_CART(product))
     }
 
     const removeFromCart = (product) => {
-        dispatch({
-            type: 'REMOVE_CART_ITEM',
-            payload: {
-                product
-            }
-        })
+        dispatch(REMOVE_CART_ITEM(product))
     }
 
     function totalPrice(product) {

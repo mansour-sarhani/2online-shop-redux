@@ -1,21 +1,17 @@
 import {Link} from "react-router-dom";
-import {useCartDispatch, useCartState} from "../../Context/Cart/cartContext";
+import {useDispatch, useSelector} from "react-redux";
+import {ADD_TO_CART} from "../../Redux/cartSlice";
 
 function ArchiveProduct({product}) {
-    const dispatch = useCartDispatch()
-    const {cart} = useCartState()
+    const {cart} = useSelector(state => state.cart)
+    const dispatch = useDispatch()
 
     function checkInCart(product, cart){
         if (cart) return cart.find(c => c.id === product.id)
     }
 
     const addToCart = (product) => {
-        dispatch({
-            type: 'ADD_TO_CART',
-            payload: {
-                product
-            }
-        })
+        dispatch(ADD_TO_CART(product))
     }
 
     return (

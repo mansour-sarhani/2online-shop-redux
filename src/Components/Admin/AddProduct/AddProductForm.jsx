@@ -1,8 +1,9 @@
 import {useEffect, useRef, useState} from "react";
-import {useProductsDispatch} from "../../../Context/Product/productsContext";
+import {useDispatch} from "react-redux";
+import {ADD_NEW_PRODUCT} from "../../../Redux/productsSlice";
 
 function AddProductForm() {
-    const dispatch = useProductsDispatch()
+    const dispatch = useDispatch()
 
     const productName = useRef(null)
     const productPrice = useRef(null)
@@ -23,17 +24,15 @@ function AddProductForm() {
 
     const addProductSubmit = (e) => {
         e.preventDefault()
-        dispatch({
-            type: 'ADD_NEW_PRODUCT',
-            payload: {
-                name: productName.current.value,
-                desc: productDesc.current.value,
-                price: productPrice.current.value,
-                offPrice: productOffPrice.current.value,
-                image: productImage.current.value,
-                feat: productFeat.current.checked
-            }
-        })
+        const newProduct = {
+            name: productName.current.value,
+            desc: productDesc.current.value,
+            price: productPrice.current.value,
+            offPrice: productOffPrice.current.value,
+            image: productImage.current.value,
+            feat: productFeat.current.checked
+        }
+        dispatch(ADD_NEW_PRODUCT(newProduct))
         e.target.reset();
     }
 

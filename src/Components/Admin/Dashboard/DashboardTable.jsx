@@ -1,8 +1,8 @@
-import {useProductsState} from "../../../Context/Product/productsContext";
 import DbTableItem from "./DbTableItem";
+import {useSelector} from "react-redux";
 
 function DashboardTable() {
-    const {products} = useProductsState()
+    const {products} = useSelector(state => state.products)
     const sortedProducts = [...products];
     sortedProducts.sort((a, b) => (a.date < b.date) ? 1 : -1);
 

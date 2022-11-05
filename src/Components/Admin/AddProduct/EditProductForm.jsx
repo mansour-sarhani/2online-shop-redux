@@ -1,11 +1,12 @@
 import {useEffect, useRef, useState} from "react";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import getOneProduct from "../../../Services/getOneProduct";
-import {useProductsDispatch} from "../../../Context/Product/productsContext";
 import {toast} from "react-toastify";
+import {useDispatch} from "react-redux";
+import {EDIT_PRODUCT} from "../../../Redux/productsSlice";
 
 function EditProductForm() {
-    const dispatch = useProductsDispatch()
+    const dispatch = useDispatch()
 
     const redirect = useNavigate()
     const passedState = useLocation();
@@ -85,13 +86,7 @@ function EditProductForm() {
 
     const editProductSubmit = (e) => {
         e.preventDefault()
-        dispatch({
-            type: 'EDIT_PRODUCT',
-            payload: {
-                productId,
-                product
-            }
-        })
+        dispatch(EDIT_PRODUCT({productId, product}))
         toast.warning('محصول با موفقیت ویرایش شد')
         redirect("/admin/dashboard")
     }
